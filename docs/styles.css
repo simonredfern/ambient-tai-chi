@@ -101,7 +101,7 @@ img { max-width: 100%; display: block; }
   background:
     radial-gradient(38% 48% at 28% 38%, rgba(111, 174, 148, .13), transparent 70%),
     radial-gradient(32% 44% at 74% 62%, rgba(217, 168, 107, .09), transparent 70%);
-  animation: drift 26s ease-in-out infinite alternate;
+  animation: drift 26s ease-in-out 4 alternate; /* everything rests after ~2 min */
   pointer-events: none;
 }
 @keyframes drift {
@@ -139,7 +139,7 @@ img { max-width: 100%; display: block; }
   margin: 0;
   flex: 0 0 auto;
   transform-origin: 50% 100%;
-  animation: breathe 8s ease-in-out infinite;
+  animation: breathe 8s ease-in-out 15; /* 15 × 8s — rests after 2 min */
   transition: opacity .9s ease; /* dissolve between poses */
 }
 .ascii-figure .ball { color: var(--amber); }
@@ -271,7 +271,7 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
   margin: 0;
   max-width: 100%;
   transform-origin: 50% 100%;
-  animation: breathe 10s ease-in-out infinite;
+  animation: breathe 10s ease-in-out 12; /* 12 × 10s — rests after 2 min */
   transition: opacity .9s ease; /* dissolve between states */
 }
 .scene .amb { color: var(--amber); }
@@ -300,7 +300,7 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
   border: 1px solid var(--jade);
   border-radius: 50%;
   opacity: 0;
-  animation: ripple 24s cubic-bezier(.2, .6, .4, 1) infinite;
+  animation: ripple 24s cubic-bezier(.2, .6, .4, 1) 5; /* 5 drops each, then still water */
 }
 .pond .ripple:nth-child(2) { animation-delay: 6s; }
 .pond .ripple:nth-child(3) { animation-delay: 12s; border-color: var(--amber); }
@@ -320,7 +320,7 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
   line-height: 1;
   color: var(--jade);
   opacity: 0;
-  animation: pondmark 12s ease-in-out infinite;
+  animation: pondmark 12s ease-in-out 10; /* sinks for good after 2 min */
 }
 @keyframes pondmark {
   0%, 100% { opacity: 0;   transform: translate(-50%, -50%) scale(.96); }
@@ -329,7 +329,7 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
 /* yin and yang — the page breathes out while the mark breathes in.
    Same 12s clock as pondmark, opposite phase. */
 .top, section, footer.site {
-  animation: counterbreath 12s ease-in-out infinite;
+  animation: counterbreath 12s ease-in-out 10; /* settles at full opacity after 2 min */
 }
 @keyframes counterbreath {
   0%, 100% { opacity: 1; }

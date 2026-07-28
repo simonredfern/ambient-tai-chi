@@ -5,6 +5,8 @@
    ============================================================ */
 (function () {
 
+  var REST_AFTER = 120000; /* all motion comes to rest after 2 minutes */
+
   /* ---------- drifting ascii wave ---------- */
   var wave = document.getElementById("wave");
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -37,24 +39,28 @@
     fit();
     window.addEventListener("resize", fit);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
-    if (!reduced) setInterval(function () { t += 0.11; draw(); }, 160);
+    if (!reduced) {
+      var waveTimer = setInterval(function () { t += 0.11; draw(); }, 160);
+      setTimeout(function () { clearInterval(waveTimer); }, REST_AFTER);
+    }
   }
 
   /* ---------- the room — the form flows down the row ---------- */
   var sceneLayers = [document.getElementById("scene"), document.getElementById("scene-b")];
   if (sceneLayers[0] && sceneLayers[1] && !reduced) {
+    /* each pose has its own stance — open, feet together, weight left, stepping */
     var poses = [
-      ["   o   ", "  /|\\  ", " ./ \\. "],
-      [" __o__ ", "   |   ", " ./ \\. "],
-      ["   o   ", "  (|)  ", " ./ \\. "],
-      [",__o__|", "   |   ", " ./ \\. "]
+      ["   o   ", "  /|\\  ", " _/ \\_ "],
+      [" __o__ ", "   |   ", "  /_\\  "],
+      ["   o   ", "  (|)  ", " _/_\\  "],
+      [",__o__|", "   |   ", "  /_\\_ "]
     ];
     /* musician + synth, one string per line (16 columns each) */
     var edge = [
-      "       .------. ",
-      "   o   |<span class=\"amb\">* * *</span> | ",
-      "  /|___|______| ",
-      " ./ \\.   |  |   "
+      "       ._____.  ",
+      "   o   |<span class=\"amb\">=====</span>|  ",
+      "  /|___|_|_|_|  ",
+      " _/ \\_   |  |   "
     ];
     var step = 0, at = 0, sceneFront = 0;
     function ballify(s) {
@@ -81,7 +87,7 @@
       return lines.join("\n");
     }
     /* dissolve between states: new frame fades in over the old one */
-    setInterval(function () {
+    var sceneTimer = setInterval(function () {
       step++; at += 0.5;
       var back = sceneLayers[1 - sceneFront];
       back.innerHTML = renderScene();
@@ -89,6 +95,7 @@
       sceneLayers[sceneFront].style.opacity = 0;
       sceneFront = 1 - sceneFront;
     }, 1800);
+    setTimeout(function () { clearInterval(sceneTimer); }, REST_AFTER);
   }
 
   /* ---------- generative drone ---------- */

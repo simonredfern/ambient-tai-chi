@@ -42,7 +42,7 @@
         <div class="figure-stack" role="img" aria-label="ASCII stick figure moving through Tai Chi poses">
           <pre class="ascii-figure" id="fig-a">   o
   <span class="ball">(</span>|<span class="ball">)</span>
- ./ \.</pre>
+ _/_\</pre>
           <pre class="ascii-figure ghost" id="fig-b" aria-hidden="true"></pre>
         </div>
         <h1 class="mega">Ambient<br />Tai Chi</h1>
@@ -88,10 +88,10 @@
   <section class="block scene-block">
     <div class="wrap">
       <div class="scene-stack" role="img" aria-label="ASCII scene: a musician plays a synthesizer while a row of figures moves through Tai Chi poses in the same room">
-        <pre class="scene" id="scene">       .------. <span class="air">· ~ ¯ ~ · _ . · ~ ¯ ~ · . _ · ~ ¯</span>
-   o   |<span class="amb">* * *</span> |    o        __o__        o       ,__o__|
-  /|___|______|   /|\         |         <span class="ball">(</span>|<span class="ball">)</span>         |
- ./ \.   |  |    ./ \.      ./ \.      ./ \.      ./ \.
+        <pre class="scene" id="scene">       ._____.  <span class="air">· ~ ¯ ~ · _ . · ~ ¯ ~ · . _ · ~ ¯</span>
+   o   |<span class="amb">=====</span>|     o        __o__        o       ,__o__|
+  /|___|_|_|_|    /|\         |         <span class="ball">(</span>|<span class="ball">)</span>         |
+ _/ \_   |  |    _/ \_       /_\       _/_\        /_\_
 <span class="gnd">¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯</span></pre>
         <pre class="scene ghost" id="scene-b" aria-hidden="true"></pre>
       </div>
@@ -110,16 +110,16 @@
     (function () {
       var ball = function (s) { return '<span class="ball">' + s + '</span>'; };
       var frames = [
-        ["   o   ", "  /|\\  ", " ./ \\. "],
-        [" __o__ ", "   |   ", " ./ \\. "],
-        ["   o   ", "  " + ball("(") + "|" + ball(")") + "  ", " ./ \\. "],
-        [",__o__|", "   |   ", " ./ \\. "]
+        ["   o   ", "  /|\\  ", " _/ \\_ "],
+        [" __o__ ", "   |   ", "  /_\\  "],
+        ["   o   ", "  " + ball("(") + "|" + ball(")") + "  ", " _/_\\  "],
+        [",__o__|", "   |   ", "  /_\\_ "]
       ].map(function (f) { return f.join("\n"); });
       var layers = [document.getElementById("fig-a"), document.getElementById("fig-b")];
       if (!layers[0] || !layers[1]) return;
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       var i = 2, front = 0; /* starts on hold-the-ball, matching the markup */
-      setInterval(function () {
+      var timer = setInterval(function () {
         i = (i + 1) % frames.length;
         var back = layers[1 - front];
         back.innerHTML = frames[i];
@@ -127,6 +127,7 @@
         layers[front].style.opacity = 0;
         front = 1 - front;
       }, 1800);
+      setTimeout(function () { clearInterval(timer); }, 120000); /* rest after 2 min */
     })();
   </script>
 
