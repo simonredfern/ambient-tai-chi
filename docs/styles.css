@@ -52,7 +52,9 @@ img { max-width: 100%; display: block; }
 }
 .top .bar {
   max-width: var(--max); margin: 0 auto; padding: 1rem 1.5rem;
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: .35rem;
+  text-align: center;
 }
 .brand {
   display: inline-flex; align-items: center; gap: .65rem;
@@ -72,7 +74,7 @@ img { max-width: 100%; display: block; }
   text-transform: lowercase;
 }
 
-.top nav { display: flex; gap: .4rem; flex-wrap: wrap; justify-content: flex-end; }
+.top nav { display: flex; gap: .4rem; flex-wrap: wrap; justify-content: center; }
 .top nav a {
   font-family: var(--mono);
   font-size: .76rem; font-weight: 400;
@@ -106,7 +108,7 @@ img { max-width: 100%; display: block; }
   from { transform: translate3d(-2%, -1%, 0) scale(1); }
   to   { transform: translate3d(2%, 2%, 0) scale(1.06); }
 }
-.hero .wrap { position: relative; }
+.hero .wrap { position: relative; text-align: center; }
 
 .hero .eyebrow {
   font-family: var(--mono);
@@ -127,7 +129,7 @@ img { max-width: 100%; display: block; }
 }
 /* hero lockup — ascii figure + wordmark side by side */
 .hero-lockup {
-  display: flex; align-items: center;
+  display: flex; align-items: center; justify-content: center;
   gap: clamp(1.5rem, 4vw, 4rem);
   flex-wrap: wrap;
   margin: .75rem 0 0;
@@ -137,6 +139,7 @@ img { max-width: 100%; display: block; }
 /* the ascii figure — breathes, slowly */
 .ascii-figure {
   font-family: var(--mono);
+  text-align: left; /* keep the figure's own lines aligned inside the centered lockup */
   font-size: clamp(1.8rem, 4.5vw, 3.2rem);
   line-height: 1.25;
   color: var(--jade);
@@ -173,13 +176,14 @@ img { max-width: 100%; display: block; }
 /* ============================================================
    Spec sheet (event data block)
    ============================================================ */
+.spec { max-width: 46rem; margin: 0 auto; }
 .spec .row {
   display: grid;
-  grid-template-columns: 12rem 1fr;
-  gap: 1.5rem;
-  align-items: baseline;
+  grid-template-columns: 1fr;
+  gap: .4rem;
   padding: 1.5rem 0;
   border-bottom: 1px solid var(--line);
+  text-align: center;
 }
 .spec .k {
   font-family: var(--mono);
@@ -202,7 +206,7 @@ img { max-width: 100%; display: block; }
   .spec .row { grid-template-columns: 1fr; gap: .35rem; padding: 1.1rem 0; }
 }
 
-section.block { padding: clamp(2.5rem, 6vw, 4.5rem) 0; }
+section.block { padding: clamp(2.5rem, 6vw, 4.5rem) 0; text-align: center; }
 .section-label {
   font-family: var(--mono);
   font-size: .74rem; font-weight: 400;
@@ -219,35 +223,11 @@ section.block { padding: clamp(2.5rem, 6vw, 4.5rem) 0; }
   line-height: 1.55;
   color: var(--fg);
   max-width: 58ch;
-  margin: 0 0 1.2rem;
+  margin: 0 auto 1.2rem;
 }
 .lead:last-child { margin-bottom: 0; }
 
 hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
-
-/* ============================================================
-   The form — ascii animation
-   ============================================================ */
-.form-anim {
-  text-align: center;
-  padding: clamp(1.5rem, 4vw, 3rem) 0;
-  border: 1px solid var(--line);
-}
-.form-anim pre {
-  display: inline-block; text-align: left;
-  font-family: var(--mono);
-  font-size: clamp(1.4rem, 3.6vw, 2.2rem);
-  line-height: 1.3;
-  color: var(--jade);
-  margin: 0 0 1.4rem;
-}
-.form-caption {
-  font-family: var(--mono);
-  font-size: .74rem;
-  letter-spacing: .3em; text-transform: lowercase;
-  color: var(--dim);
-  margin: 0;
-}
 
 /* ============================================================
    Archive
@@ -255,10 +235,13 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
 .archive { border-top: 1px solid var(--line); }
 .archive-entry {
   display: grid;
-  grid-template-columns: 16rem 1fr;
-  gap: 2.5rem;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
   padding: 3rem 0;
   border-bottom: 1px solid var(--line);
+  max-width: 52rem;
+  margin: 0 auto;
+  text-align: center;
 }
 .archive-entry .aside .edition {
   font-family: var(--mono);
@@ -276,8 +259,8 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
   font-size: clamp(1.8rem, 3.5vw, 2.8rem); line-height: 1.05;
   margin: 0 0 1rem;
 }
-.archive-entry .main p { color: var(--fg); margin: 0 0 1.1rem; max-width: 60ch; }
-.archive-entry .lineup { list-style: none; margin: 0 0 1.5rem; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.archive-entry .main p { color: var(--fg); margin: 0 auto 1.1rem; max-width: 60ch; }
+.archive-entry .lineup { list-style: none; margin: 0 0 1.5rem; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; justify-content: center; }
 .archive-entry .lineup li {
   font-family: var(--mono); font-size: .76rem;
   letter-spacing: .08em; text-transform: lowercase;
@@ -304,7 +287,7 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
   color: var(--dim);
 }
 @media (max-width: 720px) {
-  .archive-entry { grid-template-columns: 1fr; gap: 1.25rem; padding: 2.5rem 0; }
+  .archive-entry { gap: 1.25rem; padding: 2.5rem 0; }
   .archive-photos { grid-template-columns: repeat(2, 1fr); }
 }
 
@@ -332,7 +315,8 @@ footer.site {
   color: var(--dim);
 }
 footer.site .wrap {
-  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;
+  text-align: center;
   font-family: var(--mono); font-size: .74rem; letter-spacing: .18em; text-transform: lowercase;
 }
 footer.site a { color: var(--dim); }

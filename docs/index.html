@@ -31,12 +31,12 @@
     <div class="wrap">
       <p class="eyebrow">learn tai chi to live ambient music.</p>
       <div class="hero-lockup">
-        <pre class="ascii-figure" role="img" aria-label="Small ASCII figure holding the ball">  o
- <span class="ball">(</span>|<span class="ball">)</span>
- / \</pre>
+        <pre class="ascii-figure" id="hero-anim" role="img" aria-label="ASCII stick figure moving through Tai Chi poses">   o
+  <span class="ball">(</span>|<span class="ball">)</span>
+  / \  </pre>
         <h1 class="mega">Ambient<br />Tai Chi</h1>
       </div>
-      <p class="kicker">First Event <span class="mk">·</span> Sat 20 June 2026</p>
+      <p class="kicker">Next Event <span class="mk">·</span>TBC</p>
     </div>
   </section>
 
@@ -71,19 +71,6 @@
     </div>
   </section>
 
-  <!-- ============ THE FORM (ascii animation) ============ -->
-  <section class="block">
-    <div class="wrap">
-      <p class="section-label">The form</p>
-      <div class="form-anim">
-        <pre id="form-frame" role="img" aria-label="Stick figure moving through Tai Chi poses">   o
-  /|\
-  / \  </pre>
-        <p class="form-caption" id="form-caption">wu ji</p>
-      </div>
-    </div>
-  </section>
-
   <!-- ============ FOOTER ============ -->
   <footer class="site">
     <div class="wrap">
@@ -93,23 +80,21 @@
 
   <script>
     (function () {
+      var ball = function (s) { return '<span class="ball">' + s + '</span>'; };
       var frames = [
         ["   o   ", "  /|\\  ", "  / \\  "],
         [" __o__ ", "   |   ", "  / \\  "],
-        ["   o   ", "  (|)  ", "  / \\  "],
+        ["   o   ", "  " + ball("(") + "|" + ball(")") + "  ", "  / \\  "],
         [",__o__|", "   |   ", " _/ \\  "],
         ["   o   ", "  /|\\  ", " _/ \\_ "]
       ].map(function (f) { return f.join("\n"); });
-      var names = ["wu ji", "raise hands", "hold the ball", "single whip", "horse stance"];
-      var pre = document.getElementById("form-frame");
-      var cap = document.getElementById("form-caption");
-      if (!pre || !cap) return;
+      var pre = document.getElementById("hero-anim");
+      if (!pre) return;
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      var i = 0;
+      var i = 2; /* starts on hold-the-ball, matching the markup */
       setInterval(function () {
         i = (i + 1) % frames.length;
-        pre.textContent = frames[i];
-        cap.textContent = names[i];
+        pre.innerHTML = frames[i];
       }, 1800);
     })();
   </script>
