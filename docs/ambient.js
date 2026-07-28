@@ -41,28 +41,27 @@
   }
 
   /* ---------- the room — the form flows down the row ---------- */
-  var scene = document.getElementById("scene");
-  if (scene && !reduced) {
+  var sceneLayers = [document.getElementById("scene"), document.getElementById("scene-b")];
+  if (sceneLayers[0] && sceneLayers[1] && !reduced) {
     var poses = [
-      ["   o   ", "  /|\\  ", "  / \\  "],
-      [" __o__ ", "   |   ", "  / \\  "],
-      ["   o   ", "  (|)  ", "  / \\  "],
-      [",__o__|", "   |   ", " _/ \\  "],
-      ["   o   ", "  /|\\  ", " _/ \\_ "]
+      ["   o   ", "  /|\\  ", " ./ \\. "],
+      [" __o__ ", "   |   ", " ./ \\. "],
+      ["   o   ", "  (|)  ", " ./ \\. "],
+      [",__o__|", "   |   ", " ./ \\. "]
     ];
     /* musician + synth, one string per line (16 columns each) */
     var edge = [
       "       .------. ",
       "   o   |<span class=\"amb\">* * *</span> | ",
       "  /|___|______| ",
-      "  / \\    |  |   "
+      " ./ \\.   |  |   "
     ];
-    var step = 0, at = 0;
+    var step = 0, at = 0, sceneFront = 0;
     function ballify(s) {
       return s.replace("(", '<span class="ball">(</span>')
               .replace(")", '<span class="ball">)</span>');
     }
-    function drawScene() {
+    function renderScene() {
       /* the air — same drifting water as the hero wave, spaced out */
       var air = [];
       for (var x = 0; x < 17; x++) {
@@ -79,10 +78,17 @@
         lines.push(edge[r + 1] + cells.join("    "));
       }
       lines.push('<span class="gnd">' + new Array(57).join("¯") + "</span>");
-      scene.innerHTML = lines.join("\n");
+      return lines.join("\n");
     }
-    drawScene();
-    setInterval(function () { step++; at += 0.5; drawScene(); }, 1800);
+    /* dissolve between states: new frame fades in over the old one */
+    setInterval(function () {
+      step++; at += 0.5;
+      var back = sceneLayers[1 - sceneFront];
+      back.innerHTML = renderScene();
+      back.style.opacity = 1;
+      sceneLayers[sceneFront].style.opacity = 0;
+      sceneFront = 1 - sceneFront;
+    }, 1800);
   }
 
   /* ---------- generative drone ---------- */

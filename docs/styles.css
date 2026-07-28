@@ -110,14 +110,6 @@ img { max-width: 100%; display: block; }
 }
 .hero .wrap { position: relative; text-align: center; }
 
-.hero .eyebrow {
-  font-family: var(--mono);
-  color: var(--jade);
-  text-transform: lowercase;
-  letter-spacing: .16em;
-  font-size: clamp(.85rem, 2vw, 1.05rem);
-  margin: 0 0 1.5rem;
-}
 .mega {
   font-family: var(--disp);
   font-weight: 400;
@@ -137,6 +129,7 @@ img { max-width: 100%; display: block; }
 .hero-lockup .mega { margin: 0; }
 
 /* the ascii figure — breathes, slowly */
+.figure-stack { position: relative; flex: 0 0 auto; }
 .ascii-figure {
   font-family: var(--mono);
   text-align: left; /* keep the figure's own lines aligned inside the centered lockup */
@@ -147,11 +140,14 @@ img { max-width: 100%; display: block; }
   flex: 0 0 auto;
   transform-origin: 50% 100%;
   animation: breathe 8s ease-in-out infinite;
+  transition: opacity .9s ease; /* dissolve between poses */
 }
 .ascii-figure .ball { color: var(--amber); }
+/* second layer of a stack — sits on top, starts invisible */
+.ghost { position: absolute; inset: 0; opacity: 0; }
 @keyframes breathe {
-  0%, 100% { transform: scale(1);     opacity: .85; }
-  50%      { transform: scale(1.025); opacity: 1;   }
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.025); }
 }
 
 /* the ambient wave — the music, made visible */
@@ -264,6 +260,7 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
    The room — ascii scene (musician + practitioners)
    ============================================================ */
 .scene-block { border-top: 1px solid var(--line); }
+.scene-stack { position: relative; display: inline-block; max-width: 100%; }
 .scene {
   display: inline-block;
   text-align: left; /* the art must keep its own alignment inside the centered page */
@@ -275,6 +272,7 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
   max-width: 100%;
   transform-origin: 50% 100%;
   animation: breathe 10s ease-in-out infinite;
+  transition: opacity .9s ease; /* dissolve between states */
 }
 .scene .amb { color: var(--amber); }
 .scene .air { color: var(--dim); }
@@ -311,6 +309,31 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
   0%   { transform: scale(.015); opacity: 0; }
   6%   { opacity: .3; }
   100% { transform: scale(1); opacity: 0; }
+}
+/* the mark at the centre of the pond — surfaces, then sinks away */
+.pond .pond-mark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(2.75rem, 7vw, 4.5rem);
+  line-height: 1;
+  color: var(--jade);
+  opacity: 0;
+  animation: pondmark 12s ease-in-out infinite;
+}
+@keyframes pondmark {
+  0%, 100% { opacity: 0;   transform: translate(-50%, -50%) scale(.96); }
+  50%      { opacity: .28; transform: translate(-50%, -50%) scale(1.04); }
+}
+/* yin and yang — the page breathes out while the mark breathes in.
+   Same 12s clock as pondmark, opposite phase. */
+.top, section, footer.site {
+  animation: counterbreath 12s ease-in-out infinite;
+}
+@keyframes counterbreath {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .55; }
 }
 
 /* ============================================================
@@ -417,4 +440,5 @@ footer.site a:hover, footer.site a[aria-current="page"] { color: var(--jade); }
   .pond .ripple:nth-child(2) { transform: scale(.42); }
   .pond .ripple:nth-child(3) { transform: scale(.66); }
   .pond .ripple:nth-child(4) { transform: scale(.9); }
+  .pond .pond-mark { opacity: .16; }
 }
