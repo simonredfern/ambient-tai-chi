@@ -154,6 +154,37 @@ img { max-width: 100%; display: block; }
   50%      { transform: scale(1.025); opacity: 1;   }
 }
 
+/* the ambient wave — the music, made visible */
+.wave {
+  font-family: var(--mono);
+  font-size: clamp(.75rem, 1.5vw, .95rem);
+  line-height: 1;
+  color: var(--jade);
+  opacity: .45;
+  margin: clamp(1.8rem, 4vw, 2.6rem) auto 0;
+  white-space: pre;
+  overflow: hidden;
+  transition: opacity 2s ease;
+}
+.wave.live { opacity: .9; }
+
+/* sound toggle — starts the drone */
+.sound-line { margin: 1.1rem 0 0; }
+.sound {
+  font-family: var(--mono);
+  font-size: .76rem;
+  letter-spacing: .12em;
+  text-transform: lowercase;
+  color: var(--dim);
+  background: none;
+  border: 0;
+  padding: .35rem .6rem;
+  cursor: pointer;
+  transition: color .3s ease;
+}
+.sound:hover { color: var(--amber); }
+.sound[aria-pressed="true"] { color: var(--jade); }
+
 /* hero kicker (under the H1) */
 .kicker {
   display: inline-block;
@@ -228,6 +259,59 @@ section.block { padding: clamp(2.5rem, 6vw, 4.5rem) 0; text-align: center; }
 .lead:last-child { margin-bottom: 0; }
 
 hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
+
+/* ============================================================
+   The room — ascii scene (musician + practitioners)
+   ============================================================ */
+.scene-block { border-top: 1px solid var(--line); }
+.scene {
+  display: inline-block;
+  text-align: left; /* the art must keep its own alignment inside the centered page */
+  font-family: var(--mono);
+  font-size: clamp(.48rem, 2vw, 1rem); /* always fits — 56ch of Space Mono stays inside the wrap */
+  line-height: 1.4;
+  color: var(--jade);
+  margin: 0;
+  max-width: 100%;
+  transform-origin: 50% 100%;
+  animation: breathe 10s ease-in-out infinite;
+}
+.scene .amb { color: var(--amber); }
+.scene .air { color: var(--dim); }
+.scene .gnd { color: var(--dim); opacity: .5; }
+
+/* ============================================================
+   The pond — the whole page seen from above, a drop falling in.
+   Fixed behind everything; rings spread from the centre of the
+   screen out past its edges.
+   ============================================================ */
+.pond {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+.pond .ripple {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 175vmax; /* wide enough that rings leave the screen before they die */
+  aspect-ratio: 1;
+  margin: -87.5vmax 0 0 -87.5vmax;
+  border: 1px solid var(--jade);
+  border-radius: 50%;
+  opacity: 0;
+  animation: ripple 24s cubic-bezier(.2, .6, .4, 1) infinite;
+}
+.pond .ripple:nth-child(2) { animation-delay: 6s; }
+.pond .ripple:nth-child(3) { animation-delay: 12s; border-color: var(--amber); }
+.pond .ripple:nth-child(4) { animation-delay: 18s; }
+@keyframes ripple {
+  0%   { transform: scale(.015); opacity: 0; }
+  6%   { opacity: .3; }
+  100% { transform: scale(1); opacity: 0; }
+}
 
 /* ============================================================
    Archive
@@ -327,4 +411,10 @@ footer.site a:hover, footer.site a[aria-current="page"] { color: var(--jade); }
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
+  /* the pond as a still image — concentric rings at rest */
+  .pond .ripple { opacity: .1; }
+  .pond .ripple:nth-child(1) { transform: scale(.18); }
+  .pond .ripple:nth-child(2) { transform: scale(.42); }
+  .pond .ripple:nth-child(3) { transform: scale(.66); }
+  .pond .ripple:nth-child(4) { transform: scale(.9); }
 }
