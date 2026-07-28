@@ -1,1 +1,3 @@
-# modular-artists-for-our-planet-and-peoples
+# Ambient Tai Chi
+
+Beginners to Tai Chi learn whilst live ambient music is being performed.

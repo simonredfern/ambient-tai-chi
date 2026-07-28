@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ambient Tai Chi — First Event</title>
+  <meta name="description" content="Ambient Tai Chi — First Event. Beginners to Tai Chi learn whilst live ambient music is being performed. 20 June 2026, Ritterstraße 50, Kreuzberg." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ============ TOP BAR ============ -->
+  <header class="top">
+    <div class="bar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">☯</span>
+        <span class="brand-name">Ambient Tai Chi</span>
+      </a>
+      <nav>
+        <a href="index.html" class="on">[Home]</a>
+        <a href="archive.html">[Archive]</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow">learn tai chi to live ambient music.</p>
+      <div class="hero-lockup">
+        <pre class="ascii-figure" role="img" aria-label="Small ASCII figure holding the ball">  o
+ <span class="ball">(</span>|<span class="ball">)</span>
+ / \</pre>
+        <h1 class="mega">Ambient<br />Tai Chi</h1>
+      </div>
+      <p class="kicker">First Event <span class="mk">·</span> Sat 20 June 2026</p>
+    </div>
+  </section>
+
+  <!-- ============ SPEC SHEET ============ -->
+  <section class="block">
+    <div class="wrap">
+      <p class="lead">.. an occasional event series where beginners to Tai Chi learn whilst live ambient music is being performed. No experience needed — you&rsquo;ll be guided through the basics, slowly and gently, carried along by the music.</p>
+      <p class="lead">Get in touch at an event if you&rsquo;d like to teach or perform at a future one. We&rsquo;re grateful to the Ritterstraße 50 folks for letting us use their room! Entrance is by donation and there will be drinks to buy. Wear something comfortable. Phones in pockets!</p>
+      <div class="spec">
+        <div class="row">
+          <span class="k">Date</span>
+          <span class="v">Saturday 20 June 2026</span>
+        </div>
+        <div class="row">
+          <span class="k">Time</span>
+          <span class="v">16:00</span>
+        </div>
+        <div class="row">
+          <span class="k">Place</span>
+          <span class="v"><a href="https://maps.app.goo.gl/2x3YHia2PjAfWbLs5" target="_blank" rel="noopener">Ritterstraße 50, 10969 Berlin — Kreuzberg ↗</a></span>
+        </div>
+        <div class="row">
+          <span class="k">People</span>
+          <span class="v names"><b>Simon Redfern</b> · <b>Daniel Tippmann</b> · <b>Jeremiah Kisters</b></span>
+        </div>
+        <div class="row">
+          <span class="k">Programme</span>
+          <span class="v">A guided Tai Chi session for beginners, accompanied by live ambient music</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE FORM (ascii animation) ============ -->
+  <section class="block">
+    <div class="wrap">
+      <p class="section-label">The form</p>
+      <div class="form-anim">
+        <pre id="form-frame" role="img" aria-label="Stick figure moving through Tai Chi poses">   o
+  /|\
+  / \  </pre>
+        <p class="form-caption" id="form-caption">wu ji</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site">
+    <div class="wrap">
+      <span>© 2026 Ambient Tai Chi</span>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var frames = [
+        ["   o   ", "  /|\\  ", "  / \\  "],
+        [" __o__ ", "   |   ", "  / \\  "],
+        ["   o   ", "  (|)  ", "  / \\  "],
+        [",__o__|", "   |   ", " _/ \\  "],
+        ["   o   ", "  /|\\  ", " _/ \\_ "]
+      ].map(function (f) { return f.join("\n"); });
+      var names = ["wu ji", "raise hands", "hold the ball", "single whip", "horse stance"];
+      var pre = document.getElementById("form-frame");
+      var cap = document.getElementById("form-caption");
+      if (!pre || !cap) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var i = 0;
+      setInterval(function () {
+        i = (i + 1) % frames.length;
+        pre.textContent = frames[i];
+        cap.textContent = names[i];
+      }, 1800);
+    })();
+  </script>
+
+</body>
+</html>
