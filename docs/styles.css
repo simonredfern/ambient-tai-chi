@@ -327,7 +327,7 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
 }
 @keyframes counterbreath {
   0%, 100% { opacity: 1; }
-  38%, 62% { opacity: 0; }
+  42%, 58% { opacity: .3; }
 }
 
 /* ============================================================
