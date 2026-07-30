@@ -55,12 +55,13 @@
       ["   o   ", "  (|)  ", " _/_\\  "],
       [",__o__|", "   |   ", "  /_\\_ "]
     ];
-    /* musician + synth, one string per line (16 columns each) */
+    /* musician + synth — knobs, a wave display the hands stir, a stand.
+       20 columns each, so there is air between the synth and the first pair. */
     var edge = [
-      "       ._____.  ",
-      "   o   |<span class=\"amb\">=====</span>|  ",
-      "  /|___|_|_|_|  ",
-      " _/ \\_   |  |   "
+      "        ,_____,     ",
+      "   o    |o o o|     ",
+      "  /|____|<span class=\"amb\">~~~~~</span>|     ",
+      " _/ \\_  _|___|_     "
     ];
     var step = 0, at = 0, sceneFront = 0;
     function ballify(s) {
@@ -84,7 +85,7 @@
         }
         lines.push(edge[r + 1] + cells[0] + "  " + cells[1] + "        " + cells[2] + "  " + cells[3]);
       }
-      lines.push('<span class="gnd">' + new Array(57).join("¯") + "</span>");
+      lines.push('<span class="gnd">' + new Array(61).join("¯") + "</span>");
       return lines.join("\n");
     }
     /* dissolve between states: new frame fades in over the old one */
@@ -98,6 +99,19 @@
     }, 1800);
     setTimeout(function () { clearInterval(sceneTimer); }, REST_AFTER);
   }
+
+  /* ---------- a hand on the water — movement wakes the page ---------- */
+  var wakeTimer = null;
+  function wake() {
+    document.body.classList.add("awake");
+    clearTimeout(wakeTimer);
+    wakeTimer = setTimeout(function () {
+      document.body.classList.remove("awake"); /* breathing resumes from the top */
+    }, 4000);
+  }
+  window.addEventListener("mousemove", wake);
+  window.addEventListener("scroll", wake, { passive: true });
+  window.addEventListener("touchstart", wake, { passive: true });
 
   /* ---------- generative drone ---------- */
   var btn = document.getElementById("sound");
