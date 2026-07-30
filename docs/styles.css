@@ -311,9 +311,14 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
   opacity: 0;
   animation: pondmark 24s ease-in-out 5; /* sinks for good after 2 min */
 }
+/* the mark waits below the surface until the page has emptied,
+   surfaces alone, then sinks before the page returns */
 @keyframes pondmark {
-  0%, 100% { opacity: 0;   transform: translate(-50%, -50%) scale(.96); }
-  50%      { opacity: .5;  transform: translate(-50%, -50%) scale(1.04); }
+  0%, 100% { opacity: 0; transform: translate(-50%, -50%) scale(.96); }
+  35%      { opacity: 0; }
+  45%, 55% { opacity: .5; }
+  50%      { transform: translate(-50%, -50%) scale(1.04); }
+  65%      { opacity: 0; }
 }
 /* yin and yang — the page breathes out while the mark breathes in.
    Same 24s clock as pondmark, opposite phase. */
@@ -322,7 +327,7 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
 }
 @keyframes counterbreath {
   0%, 100% { opacity: 1; }
-  50%      { opacity: .11; }
+  38%, 62% { opacity: 0; }
 }
 
 /* ============================================================
