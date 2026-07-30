@@ -45,7 +45,6 @@ img { max-width: 100%; display: block; }
    Top bar / nav
    ============================================================ */
 .top {
-  border-bottom: 1px solid var(--line);
   position: sticky; top: 0; z-index: 20;
   background: color-mix(in srgb, var(--bg) 86%, transparent);
   backdrop-filter: blur(8px);
@@ -62,35 +61,42 @@ img { max-width: 100%; display: block; }
   flex: 0 0 auto;
 }
 .brand:hover { color: var(--fg); }
-.brand:hover .brand-mark { transform: rotate(180deg); }
+/* the mark doubles as the sound toggle — it turns while the drone plays */
 .brand-mark {
   color: var(--jade);
   font-size: 1.2rem; line-height: 1;
-  transition: transform 1.6s ease-in-out;
+  background: none; border: 0; padding: 0;
+  cursor: pointer;
+  transition: transform 1.6s ease-in-out, color .3s ease;
 }
+.brand-mark:hover { transform: rotate(180deg); color: var(--amber); }
+.brand-mark[aria-pressed="true"] {
+  color: var(--amber);
+  animation: brandturn 24s linear infinite;
+}
+@keyframes brandturn { to { transform: rotate(360deg); } }
 .brand-name {
   font-family: var(--mono); font-weight: 700;
   font-size: .78rem; letter-spacing: .28em;
   text-transform: lowercase;
 }
 
-.top nav { display: flex; gap: .4rem; flex-wrap: wrap; justify-content: center; }
-.top nav a {
+footer.site nav { display: flex; gap: .4rem; flex-wrap: wrap; justify-content: center; }
+footer.site nav a {
   font-family: var(--mono);
   font-size: .76rem; font-weight: 400;
   letter-spacing: .1em; text-transform: lowercase;
   color: var(--dim);
   padding: .35rem .55rem;
 }
-.top nav a:hover { color: var(--amber); }
-.top nav a.on { color: var(--jade); }
+footer.site nav a:hover { color: var(--amber); }
+footer.site nav a.on { color: var(--jade); }
 
 /* ============================================================
    Hero
    ============================================================ */
 .hero {
   position: relative;
-  border-bottom: 1px solid var(--line);
   padding: clamp(3rem, 9vw, 7rem) 0 clamp(2.5rem, 6vw, 5rem);
   overflow: hidden;
 }
@@ -164,23 +170,6 @@ img { max-width: 100%; display: block; }
 }
 .wave.live { opacity: .9; }
 
-/* sound toggle — starts the drone */
-.sound-line { margin: 1.1rem 0 0; }
-.sound {
-  font-family: var(--mono);
-  font-size: .76rem;
-  letter-spacing: .12em;
-  text-transform: lowercase;
-  color: var(--dim);
-  background: none;
-  border: 0;
-  padding: .35rem .6rem;
-  cursor: pointer;
-  transition: color .3s ease;
-}
-.sound:hover { color: var(--amber); }
-.sound[aria-pressed="true"] { color: var(--jade); }
-
 /* hero kicker (under the H1) */
 .kicker {
   display: inline-block;
@@ -197,7 +186,7 @@ img { max-width: 100%; display: block; }
 @media (max-width: 480px) {
   .top .bar { padding: .75rem 1rem; }
   .brand-name { font-size: .7rem; letter-spacing: .2em; }
-  .top nav a { font-size: .7rem; padding: .3rem .4rem; }
+  footer.site nav a { font-size: .7rem; padding: .3rem .4rem; }
 }
 
 /* ============================================================
@@ -259,7 +248,6 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
 /* ============================================================
    The room — ascii scene (musician + practitioners)
    ============================================================ */
-.scene-block { border-top: 1px solid var(--line); }
 .scene-stack { position: relative; display: inline-block; max-width: 100%; }
 .scene {
   display: inline-block;
@@ -300,11 +288,12 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
   border: 1px solid var(--jade);
   border-radius: 50%;
   opacity: 0;
-  animation: ripple 24s cubic-bezier(.2, .6, .4, 1) 5; /* 5 drops each, then still water */
+  /* 23s — just off the 24s breath, so the two slowly drift in and out of phase */
+  animation: ripple 23s cubic-bezier(.2, .6, .4, 1) 5; /* 5 drops each, then still water */
 }
-.pond .ripple:nth-child(2) { animation-delay: 6s; }
-.pond .ripple:nth-child(3) { animation-delay: 12s; border-color: var(--amber); }
-.pond .ripple:nth-child(4) { animation-delay: 18s; }
+.pond .ripple:nth-child(2) { animation-delay: 5.75s; }
+.pond .ripple:nth-child(3) { animation-delay: 11.5s; border-color: var(--amber); }
+.pond .ripple:nth-child(4) { animation-delay: 17.25s; }
 @keyframes ripple {
   0%   { transform: scale(.015); opacity: 0; }
   6%   { opacity: .3; }
@@ -320,20 +309,20 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
   line-height: 1;
   color: var(--jade);
   opacity: 0;
-  animation: pondmark 12s ease-in-out 10; /* sinks for good after 2 min */
+  animation: pondmark 24s ease-in-out 5; /* sinks for good after 2 min */
 }
 @keyframes pondmark {
   0%, 100% { opacity: 0;   transform: translate(-50%, -50%) scale(.96); }
-  50%      { opacity: .28; transform: translate(-50%, -50%) scale(1.04); }
+  50%      { opacity: .5;  transform: translate(-50%, -50%) scale(1.04); }
 }
 /* yin and yang — the page breathes out while the mark breathes in.
-   Same 12s clock as pondmark, opposite phase. */
+   Same 24s clock as pondmark, opposite phase. */
 .top, section, footer.site {
-  animation: counterbreath 12s ease-in-out 10; /* settles at full opacity after 2 min */
+  animation: counterbreath 24s ease-in-out 5; /* settles at full opacity after 2 min */
 }
 @keyframes counterbreath {
   0%, 100% { opacity: 1; }
-  50%      { opacity: .55; }
+  50%      { opacity: .11; }
 }
 
 /* ============================================================
@@ -417,12 +406,11 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
    Footer
    ============================================================ */
 footer.site {
-  border-top: 1px solid var(--line);
   padding: 2.5rem 0;
   color: var(--dim);
 }
 footer.site .wrap {
-  display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem;
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
   text-align: center;
   font-family: var(--mono); font-size: .74rem; letter-spacing: .18em; text-transform: lowercase;
 }

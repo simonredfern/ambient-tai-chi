@@ -75,13 +75,14 @@
         air.push(glyphs[Math.round((v + 1) / 2 * (glyphs.length - 1))]);
       }
       var lines = [edge[0] + '<span class="air">' + air.join(" ") + "</span>"];
-      /* each figure is one beat behind the next — the form travels down the row */
+      /* each figure is one beat behind the next — the form travels down the row.
+         The four stand as two pairs — pushing hands, practicing together. */
       for (var r = 0; r < 3; r++) {
         var cells = [];
         for (var i = 0; i < 4; i++) {
           cells.push(ballify(poses[(step + i) % poses.length][r]));
         }
-        lines.push(edge[r + 1] + cells.join("    "));
+        lines.push(edge[r + 1] + cells[0] + "  " + cells[1] + "        " + cells[2] + "  " + cells[3]);
       }
       lines.push('<span class="gnd">' + new Array(57).join("¯") + "</span>");
       return lines.join("\n");
@@ -116,7 +117,7 @@
 
     var master = audio.master = ctx.createGain();
     master.gain.setValueAtTime(0, now);
-    master.gain.linearRampToValueAtTime(0.32, now + 6); /* slow bloom */
+    master.gain.linearRampToValueAtTime(0.16, now + 6); /* slow bloom */
 
     var lp = ctx.createBiquadFilter();
     lp.type = "lowpass";
@@ -169,7 +170,6 @@
     if (!on && !startDrone()) return;
     if (on) stopDrone();
     on = !on;
-    btn.textContent = on ? "[ sound: on ]" : "[ sound: off ]";
     btn.setAttribute("aria-pressed", String(on));
     if (wave) wave.classList.toggle("live", on);
   });

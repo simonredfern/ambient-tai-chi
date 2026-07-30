@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ambient Tai Chi — First Event</title>
-  <meta name="description" content="Ambient Tai Chi — live ambient music plus a gentle introduction to Tai Chi, Chi Gung and Pushing Hands. Stillness, body awareness, and a wee intro to the martial art side. Berlin." />
+  <meta name="description" content="Ambient Tai Chi — live ambient music plus a gentle introduction to Tai Chi (Taijiquan 太極拳), Chi Gung (Qigong 氣功) and Pushing Hands (Tui Shou 推手). Stillness, body awareness, and a wee intro to the martial art side. Berlin." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
@@ -24,14 +24,10 @@
   <!-- ============ TOP BAR ============ -->
   <header class="top">
     <div class="bar">
-      <a class="brand" href="index.html">
-        <span class="brand-mark" aria-hidden="true">☯</span>
-        <span class="brand-name">Ambient Tai Chi</span>
-      </a>
-      <nav>
-        <a href="index.html" class="on">[Home]</a>
-        <a href="archive.html">[Archive]</a>
-      </nav>
+      <span class="brand">
+        <button class="brand-mark" id="sound" aria-pressed="false" aria-label="Sound on/off" title="sound on/off">☯</button>
+        <a class="brand-name" href="index.html">Ambient Tai Chi</a>
+      </span>
     </div>
   </header>
 
@@ -49,14 +45,13 @@
       </div>
       <pre class="wave" id="wave" aria-hidden="true">_.·-~¯~-·._.·-~¯~-·._</pre>
       <p class="kicker">Next Event <span class="mk">·</span>TBC</p>
-      <p class="sound-line"><button class="sound" id="sound" aria-pressed="false">[ sound: off ]</button></p>
     </div>
   </section>
 
   <!-- ============ SPEC SHEET ============ -->
   <section class="block">
     <div class="wrap">
-      <p class="lead">If you&rsquo;ve ever been interested to try Tai Chi but haven&rsquo;t yet, check out one of our Ambient Tai Chi events: Live Ambient music plus a gentle introduction to Tai Chi, Chi Gung and Pushing Hands. Stillness, body - mind awareness, and a wee intro to the martial art side of things.</p>
+      <p class="lead">If you&rsquo;ve ever been interested in trying out Tai Chi but haven&rsquo;t yet, maybe an Ambient Tai Chi session would connect for you: Live Ambient music plus a gentle introduction to Tai Chi (Taijiquan 太極拳), Chi Gung (Qigong 氣功) and Pushing Hands (Tui Shou 推手). Stillness, body - mind awareness, and a wee intro to the martial art side of things.</p>
       <!-- Spec sheet hidden until the first event is confirmed.
       <div class="spec">
         <div class="row">
@@ -87,11 +82,11 @@
   <!-- ============ THE ROOM — ascii scene ============ -->
   <section class="block scene-block">
     <div class="wrap">
-      <div class="scene-stack" role="img" aria-label="ASCII scene: a musician plays a synthesizer while a row of figures moves through Tai Chi poses in the same room">
+      <div class="scene-stack" role="img" aria-label="ASCII scene: a musician plays a synthesizer while two pairs of figures practice Tai Chi and pushing hands together in the same room">
         <pre class="scene" id="scene">       ._____.  <span class="air">· ~ ¯ ~ · _ . · ~ ¯ ~ · . _ · ~ ¯</span>
-   o   |<span class="amb">=====</span>|     o        __o__        o       ,__o__|
-  /|___|_|_|_|    /|\         |         <span class="ball">(</span>|<span class="ball">)</span>         |
- _/ \_   |  |    _/ \_       /_\       _/_\        /_\_
+   o   |<span class="amb">=====</span>|     o      __o__            o     ,__o__|
+  /|___|_|_|_|    /|\       |             <span class="ball">(</span>|<span class="ball">)</span>       |
+ _/ \_   |  |    _/ \_     /_\           _/_\      /_\_
 <span class="gnd">¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯</span></pre>
         <pre class="scene ghost" id="scene-b" aria-hidden="true"></pre>
       </div>
@@ -101,6 +96,10 @@
   <!-- ============ FOOTER ============ -->
   <footer class="site">
     <div class="wrap">
+      <nav>
+        <a href="index.html" class="on">[Home]</a>
+        <a href="archive.html">[Archive]</a>
+      </nav>
       <span>© 2026 Ambient Tai Chi</span>
     </div>
   </footer>
