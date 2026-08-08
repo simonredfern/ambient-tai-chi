@@ -5,11 +5,16 @@
    ============================================================ */
 (function () {
 
-  var REST_AFTER = 120000; /* all motion comes to rest after 2 minutes */
+  /* all motion comes to rest — after 2 minutes, or after a 30-second
+     taste when the visitor prefers reduced motion */
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var REST_AFTER = reduced ? 30000 : 120000;
+  if (reduced) {
+    setTimeout(function () { document.body.classList.add("rest"); }, REST_AFTER);
+  }
 
   /* ---------- drifting ascii wave ---------- */
   var wave = document.getElementById("wave");
-  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var glyphs = ["_", ".", "·", "-", "~", "¯"]; /* low → high */
   var t = 0, chars = 60;
 
@@ -39,15 +44,13 @@
     fit();
     window.addEventListener("resize", fit);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
-    if (!reduced) {
-      var waveTimer = setInterval(function () { t += 0.11; draw(); }, 160);
-      setTimeout(function () { clearInterval(waveTimer); }, REST_AFTER);
-    }
+    var waveTimer = setInterval(function () { t += 0.11; draw(); }, 160);
+    setTimeout(function () { clearInterval(waveTimer); }, REST_AFTER);
   }
 
   /* ---------- the room — the form flows down the row ---------- */
   var sceneLayers = [document.getElementById("scene"), document.getElementById("scene-b")];
-  if (sceneLayers[0] && sceneLayers[1] && !reduced) {
+  if (sceneLayers[0] && sceneLayers[1]) {
     /* each pose has its own stance — open, feet together, weight left, stepping */
     var poses = [
       ["   o   ", "  /|\\  ", " _/ \\_ "],
@@ -68,6 +71,24 @@
       return s.replace("(", '<span class="ball">(</span>')
               .replace(")", '<span class="ball">)</span>');
     }
+    /* flip a pose horizontally so a partner can face the other way */
+    function mirror(s) {
+      var flip = { "/": "\\", "\\": "/", "(": ")", ")": "(" };
+      return s.split("").reverse().map(function (c) { return flip[c] || c; }).join("");
+    }
+    /* join two poses as a facing pair, one space apart at their closest point */
+    function pairUp(a, b) {
+      var L = poses[a], R = poses[b].map(mirror), gap = 99, r;
+      for (r = 0; r < 3; r++) {
+        gap = Math.min(gap, L[r].match(/ *$/)[0].length + R[r].match(/^ */)[0].length);
+      }
+      var trim = Math.max(0, gap - 1), rows = [];
+      for (r = 0; r < 3; r++) {
+        var cut = Math.min(trim, L[r].match(/ *$/)[0].length);
+        rows.push(L[r].slice(0, L[r].length - cut) + R[r].slice(trim - cut));
+      }
+      return rows;
+    }
     function renderScene() {
       /* the air — same drifting water as the hero wave, spaced out */
       var air = [];
@@ -77,13 +98,16 @@
       }
       var lines = [edge[0] + '<span class="air">' + air.join(" ") + "</span>"];
       /* each figure is one beat behind the next — the form travels down the row.
-         The four stand as two pairs — pushing hands, practicing together. */
+         The four stand as two pairs, partners mirrored to face each other,
+         close enough to touch — pushing hands, practicing together. */
+      var left = pairUp(step % poses.length, (step + 1) % poses.length);
+      var right = pairUp((step + 2) % poses.length, (step + 3) % poses.length);
+      var mid = new Array(15).join(" ");
       for (var r = 0; r < 3; r++) {
-        var cells = [];
-        for (var i = 0; i < 4; i++) {
-          cells.push(ballify(poses[(step + i) % poses.length][r]));
-        }
-        lines.push(edge[r + 1] + cells[0] + "  " + cells[1] + "        " + cells[2] + "  " + cells[3]);
+        var l = left[r], q = right[r];
+        while (l.length < 13) l += " ";
+        while (q.length < 13) q = " " + q;
+        lines.push(edge[r + 1] + ballify(l) + mid + ballify(q));
       }
       lines.push('<span class="gnd">' + new Array(61).join("¯") + "</span>");
       return lines.join("\n");

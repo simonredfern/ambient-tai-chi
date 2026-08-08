@@ -427,15 +427,16 @@ footer.site a { color: var(--dim); }
 footer.site a:hover, footer.site a[aria-current="page"] { color: var(--jade); }
 
 /* ============================================================
-   Motion preferences
+   Motion preferences — reduced motion gets a 30-second taste,
+   then the page comes to rest (class added by ambient.js)
    ============================================================ */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation: none !important; transition: none !important; }
-  /* the pond as a still image — concentric rings at rest */
-  .pond .ripple { opacity: .1; }
-  .pond .ripple:nth-child(1) { transform: scale(.18); }
-  .pond .ripple:nth-child(2) { transform: scale(.42); }
-  .pond .ripple:nth-child(3) { transform: scale(.66); }
-  .pond .ripple:nth-child(4) { transform: scale(.9); }
-  .pond .pond-mark { opacity: .16; }
+body.rest, body.rest *, body.rest *::before, body.rest *::after {
+  animation: none !important; transition: none !important;
 }
+/* the pond as a still image — concentric rings at rest */
+body.rest .pond .ripple { opacity: .1; }
+body.rest .pond .ripple:nth-child(1) { transform: scale(.18); }
+body.rest .pond .ripple:nth-child(2) { transform: scale(.42); }
+body.rest .pond .ripple:nth-child(3) { transform: scale(.66); }
+body.rest .pond .ripple:nth-child(4) { transform: scale(.9); }
+body.rest .pond .pond-mark { opacity: .16; }

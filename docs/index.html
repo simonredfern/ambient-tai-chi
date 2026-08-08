@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ambient Tai Chi — First Event</title>
-  <meta name="description" content="Ambient Tai Chi — live ambient music plus a gentle introduction to Tai Chi (Taijiquan 太極拳), Chi Gung (Qigong 氣功) and Pushing Hands (Tui Shou 推手). Stillness, body awareness, and a wee intro to the martial art side. Berlin." />
+  <meta name="description" content="Ambient Tai Chi — An introduction to Tai Chi (Taijiquan 太極拳), Chi Gung (Qigong 氣功) and Pushing Hands (Tui Shou 推手) to live ambient music! Stillness, body awareness, and a wee intro to the martial art side. Berlin." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
@@ -52,10 +52,10 @@
   <section class="block">
     <div class="wrap">
       <p class="lead">If you&rsquo;ve ever thought about trying Tai Chi or you'd like to try it in a different way, try an Ambient Tai Chi session!</p>
-      <p class="lead">Ambient Tai Chi is Live Ambient music plus a relaxed introduction to Tai Chi (Taijiquan), Qi Gong and Pushing Hands (Tui Shou).</p>
-      <p class="lead">Stillness, body - mind awareness, and light partner contact to the martial art side of things.</p>
-      <p class="lead">Simon Redfern has long practiced Tai Chi and is currently a student of Wolf and Anika at the Ma Tsun Kuen Tai Chi Chuan. Mitch is a long time ambient musician and creator of electronic instruments. We're looking forward to welcoming you!</p>
-      <p class="lead">Location: TESOBE GmbH, Osloer Strasse 16/17, 13359 Berlin.</p>
+      <p class="lead">Ambient Tai Chi is an introduction to Tai Chi (Taijiquan), Qi Gong and Pushing Hands (Tui Shou) to the sound of live ambient music.</p>
+      <p class="lead">Stillness, body - mind awareness, and light partner contact for an intro the martial art side of things.</p>
+      <p class="lead">Simon Redfern has long practiced Tai Chi and is programmer, CEO and improvising muscian. He's currently a student of Wolf and Anika at the Ma Tsun Kuen Tai Chi Chuan school in Prenzlauer Berg. Mitch Altman is a berlin based hacker, electronics engineer and musician.</p>
+      <p class="lead">Location: TESOBE GmbH, Osloer Strasse 16/17, 13359 Berlin or at a festival near you!</p>
 
       <!-- Spec sheet hidden until the first event is confirmed.
       <div class="spec">
@@ -87,11 +87,11 @@
   <!-- ============ THE ROOM — ascii scene ============ -->
   <section class="block scene-block">
     <div class="wrap">
-      <div class="scene-stack" role="img" aria-label="ASCII scene: a musician plays a synthesizer while two pairs of figures practice Tai Chi and pushing hands together in the same room">
+      <div class="scene-stack" role="img" aria-label="ASCII scene: a musician plays a synthesizer while two pairs of figures practice Tai Chi and pushing hands together in the same space">
         <pre class="scene" id="scene">        ,_____,     <span class="air">· ~ ¯ ~ · _ . · ~ ¯ ~ · . _ · ~ ¯</span>
-   o    |o o o|        o      __o__            o     ,__o__|
-  /|____|<span class="amb">~~~~~</span>|       /|\       |             <span class="ball">(</span>|<span class="ball">)</span>       |
- _/ \_  _|___|_      _/ \_     /_\           _/_\      /_\_
+   o    |o o o|        o  __o__                    o |__o__,
+  /|____|<span class="amb">~~~~~</span>|       /|\   |                     <span class="ball">(</span>|<span class="ball">)</span>   |
+ _/ \_  _|___|_      _/ \_ /_\                   _/_\ _/_\
 <span class="gnd">¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯</span></pre>
         <pre class="scene ghost" id="scene-b" aria-hidden="true"></pre>
       </div>
@@ -101,11 +101,12 @@
   <!-- ============ FOOTER ============ -->
   <footer class="site">
     <div class="wrap">
-      <nav>
+      <nav><!--
         <a href="index.html" class="on">[Home]</a>
         <a href="archive.html">[Archive]</a>
+         -->
       </nav>
-      <span>© 2026 Ambient Tai Chi</span>
+      <!-- <span>© 2026</span> -->
     </div>
   </footer>
 
@@ -121,7 +122,7 @@
       ].map(function (f) { return f.join("\n"); });
       var layers = [document.getElementById("fig-a"), document.getElementById("fig-b")];
       if (!layers[0] || !layers[1]) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       var i = 2, front = 0; /* starts on hold-the-ball, matching the markup */
       var timer = setInterval(function () {
         i = (i + 1) % frames.length;
@@ -131,7 +132,7 @@
         layers[front].style.opacity = 0;
         front = 1 - front;
       }, 1800);
-      setTimeout(function () { clearInterval(timer); }, 120000); /* rest after 2 min */
+      setTimeout(function () { clearInterval(timer); }, reduced ? 30000 : 120000); /* rest after 2 min, or 30 s under reduced motion */
     })();
   </script>
 
