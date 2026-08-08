@@ -253,7 +253,7 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
   display: inline-block;
   text-align: left; /* the art must keep its own alignment inside the centered page */
   font-family: var(--mono);
-  font-size: clamp(.48rem, 2vw, 1rem); /* always fits — 56ch of Space Mono stays inside the wrap */
+  font-size: clamp(.42rem, 1.7vw, 1rem); /* always fits — ~73ch of Space Mono stays inside the wrap */
   line-height: 1.4;
   color: var(--jade);
   margin: 0;

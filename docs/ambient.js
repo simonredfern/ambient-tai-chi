@@ -59,13 +59,24 @@
       [",__o__|", "   |   ", "  /_\\_ "]
     ];
     /* musician + synth — knobs, a wave display the hands stir, a stand.
-       20 columns each, so there is air between the synth and the first pair. */
-    var edge = [
-      "        ,_____,     ",
-      "   o    |o o o|     ",
-      "  /|____|<span class=\"amb\">~~~~~</span>|     ",
-      " _/ \\_  _|___|_     "
-    ];
+       20 columns each, so there is air between the synth and the first pair.
+       The player moves too: a ripple runs along the arm into the synth —
+       stirring the sound — and the display ripples along with the music. */
+    function edgeRows() {
+      var disp = [];
+      for (var x = 0; x < 5; x++) {
+        var v = Math.sin(x * 0.9 + at * 1.4) * 0.6 + Math.sin(x * 0.5 - at) * 0.4;
+        disp.push(glyphs[Math.round((v + 1) / 2 * (glyphs.length - 1))]);
+      }
+      var arm = ["_", "_", "_", "_"];
+      arm[step % 4] = "~";
+      return [
+        "        ,_____,     ",
+        "   o    |o o o|     ",
+        "  /|" + arm.join("") + "|" + '<span class="amb">' + disp.join("") + "</span>|     ",
+        " _/ \\_  _|___|_     "
+      ];
+    }
     var step = 0, at = 0, sceneFront = 0;
     function ballify(s) {
       return s.replace("(", '<span class="ball">(</span>')
@@ -90,26 +101,31 @@
       return rows;
     }
     function renderScene() {
+      var edge = edgeRows();
       /* the air — same drifting water as the hero wave, spaced out */
       var air = [];
-      for (var x = 0; x < 17; x++) {
+      for (var x = 0; x < 27; x++) {
         var v = Math.sin(x * 0.7 + at) * 0.6 + Math.sin(x * 0.26 - at * 0.6) * 0.4;
         air.push(glyphs[Math.round((v + 1) / 2 * (glyphs.length - 1))]);
       }
       var lines = [edge[0] + '<span class="air">' + air.join(" ") + "</span>"];
-      /* each figure is one beat behind the next — the form travels down the row.
-         The four stand as two pairs, partners mirrored to face each other,
+      /* each pair is one beat behind the next — the form travels down the row.
+         The six stand as three pairs, partners mirrored to face each other,
          close enough to touch — pushing hands, practicing together. */
-      var left = pairUp(step % poses.length, (step + 1) % poses.length);
-      var right = pairUp((step + 2) % poses.length, (step + 3) % poses.length);
-      var mid = new Array(15).join(" ");
+      var pairs = [
+        pairUp(step % poses.length, (step + 1) % poses.length),
+        pairUp((step + 1) % poses.length, (step + 2) % poses.length),
+        pairUp((step + 2) % poses.length, (step + 3) % poses.length)
+      ];
+      var mid = new Array(8).join(" ");
       for (var r = 0; r < 3; r++) {
-        var l = left[r], q = right[r];
-        while (l.length < 13) l += " ";
-        while (q.length < 13) q = " " + q;
-        lines.push(edge[r + 1] + ballify(l) + mid + ballify(q));
+        var a = pairs[0][r], b = pairs[1][r], c = pairs[2][r];
+        while (a.length < 13) a += " ";
+        while (b.length < 13) b += " ";
+        while (c.length < 13) c = " " + c;
+        lines.push(edge[r + 1] + ballify(a) + mid + ballify(b) + mid + ballify(c));
       }
-      lines.push('<span class="gnd">' + new Array(61).join("¯") + "</span>");
+      lines.push('<span class="gnd">' + new Array(74).join("¯") + "</span>");
       return lines.join("\n");
     }
     /* dissolve between states: new frame fades in over the old one */
