@@ -44,8 +44,24 @@
     fit();
     window.addEventListener("resize", fit);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
-    var waveTimer = setInterval(function () { t += 0.11; draw(); }, 160);
-    setTimeout(function () { clearInterval(waveTimer); }, REST_AFTER);
+    var hero = document.querySelector(".hero");
+    var waveTimer = null, waveRest = null;
+    function runHero() {
+      clearInterval(waveTimer);
+      clearTimeout(waveRest);
+      if (hero) { /* re-arm the css drift and breathe too */
+        hero.classList.add("still");
+        void hero.offsetHeight;
+        hero.classList.remove("still");
+      }
+      waveTimer = setInterval(function () { t += 0.11; draw(); }, 160);
+      waveRest = setTimeout(function () { clearInterval(waveTimer); }, REST_AFTER);
+    }
+    runHero();
+    /* a tap on the figure or the water sets the hero moving again */
+    var figures = document.querySelector(".figure-stack");
+    if (figures) figures.addEventListener("click", runHero);
+    wave.addEventListener("click", runHero);
   }
 
   /* ---------- the room — the form flows down the row ---------- */
@@ -129,15 +145,29 @@
       return lines.join("\n");
     }
     /* dissolve between states: new frame fades in over the old one */
-    var sceneTimer = setInterval(function () {
+    function stepScene() {
       step++; at += 0.5;
       var back = sceneLayers[1 - sceneFront];
       back.innerHTML = renderScene();
       back.style.opacity = 1;
       sceneLayers[sceneFront].style.opacity = 0;
       sceneFront = 1 - sceneFront;
-    }, 1800);
-    setTimeout(function () { clearInterval(sceneTimer); }, REST_AFTER);
+    }
+    var sceneTimer = null, sceneRest = null;
+    function runScene() {
+      clearInterval(sceneTimer);
+      clearTimeout(sceneRest);
+      sceneLayers.forEach(function (layer) { /* re-arm the css breathe too */
+        layer.style.animation = "none";
+        void layer.offsetHeight;
+        layer.style.animation = "";
+      });
+      sceneTimer = setInterval(stepScene, 1800);
+      sceneRest = setTimeout(function () { clearInterval(sceneTimer); }, REST_AFTER);
+    }
+    runScene();
+    /* a tap on the room sets everyone moving again */
+    sceneLayers[0].parentElement.addEventListener("click", runScene);
   }
 
   /* ---------- a hand on the water — movement wakes the page ---------- */

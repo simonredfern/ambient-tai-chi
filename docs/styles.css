@@ -135,8 +135,8 @@ footer.site nav a.on { color: var(--jade); }
 }
 .hero-lockup .mega { margin: 0; }
 
-/* the ascii figure — breathes, slowly */
-.figure-stack { position: relative; flex: 0 0 auto; }
+/* the ascii figure — breathes, slowly; a tap sets it breathing again */
+.figure-stack { position: relative; flex: 0 0 auto; cursor: pointer; }
 .ascii-figure {
   font-family: var(--mono);
   text-align: left; /* keep the figure's own lines aligned inside the centered lockup */
@@ -168,8 +168,12 @@ footer.site nav a.on { color: var(--jade); }
   white-space: pre;
   overflow: hidden;
   transition: opacity 2s ease;
+  cursor: pointer;
 }
 .wave.live { opacity: .9; }
+
+/* momentarily stilled by js to re-arm the hero's css animations */
+.hero.still::before, .hero.still .ascii-figure { animation: none; }
 
 /* hero kicker (under the H1) */
 .kicker {
@@ -248,7 +252,7 @@ hr.rule { border: 0; border-top: 1px solid var(--line); margin: 0; }
 /* ============================================================
    The room — ascii scene (musician + practitioners)
    ============================================================ */
-.scene-stack { position: relative; display: inline-block; max-width: 100%; }
+.scene-stack { position: relative; display: inline-block; max-width: 100%; cursor: pointer; }
 .scene {
   display: inline-block;
   text-align: left; /* the art must keep its own alignment inside the centered page */
