@@ -75,6 +75,8 @@ img { max-width: 100%; display: block; }
   animation: brandturn 24s linear infinite;
 }
 @keyframes brandturn { to { transform: rotate(360deg); } }
+/* the mark in the hero — below the wave it plays */
+.hero-sound { display: block; margin: 1.4rem auto 0; font-size: 1.6rem; }
 .brand-name {
   font-family: var(--mono); font-weight: 700;
   font-size: .78rem; letter-spacing: .28em;
