@@ -170,6 +170,68 @@
     sceneLayers[0].parentElement.addEventListener("click", runScene);
   }
 
+  /* ---------- the pond mark — it surfaces only over open water ---------- */
+  var placePondMark = null;
+  var mark = document.querySelector(".pond .pond-mark");
+  if (mark) {
+    /* candidate spots, centre first, then quieter corners of the surface */
+    var SPOTS = [
+      [.5, .5], [.5, .32], [.5, .68], [.28, .5], [.72, .5],
+      [.2, .25], [.8, .25], [.2, .78], [.8, .78]
+    ];
+    var TEXTY = /^(P|H1|H2|H3|A|B|EM|STRONG|SPAN|PRE|BUTTON)$/;
+    function openWater(x, y) {
+      var reach = (mark.offsetWidth || 64) * 0.6;
+      var probes = [[0, 0], [-reach, 0], [reach, 0], [0, -reach], [0, reach]];
+      for (var i = 0; i < probes.length; i++) {
+        var el = document.elementFromPoint(x + probes[i][0], y + probes[i][1]);
+        if (el && TEXTY.test(el.tagName)) return false;
+      }
+      return true;
+    }
+    /* its home: the still gap between the kicker and the first words below */
+    function homeSpot() {
+      var kick = document.querySelector(".hero .kicker");
+      var lead = document.querySelector("section.block .lead");
+      if (!kick || !lead) return null;
+      var y = (kick.getBoundingClientRect().bottom + lead.getBoundingClientRect().top) / 2;
+      if (y < 60 || y > window.innerHeight - 60) return null; /* scrolled out of view */
+      return y;
+    }
+    /* the drop falls where the mark surfaces — rings and mark share a centre */
+    var ripples = document.querySelectorAll(".pond .ripple");
+    function settle(left, top) {
+      mark.style.left = left;
+      mark.style.top = top;
+      for (var i = 0; i < ripples.length; i++) {
+        ripples[i].style.left = left;
+        ripples[i].style.top = top;
+      }
+    }
+    function placeMark() {
+      var home = homeSpot();
+      if (home !== null && openWater(window.innerWidth / 2, home)) {
+        settle("50%", home + "px");
+        return;
+      }
+      for (var i = 0; i < SPOTS.length; i++) {
+        var x = SPOTS[i][0] * window.innerWidth, y = SPOTS[i][1] * window.innerHeight;
+        if (openWater(x, y)) {
+          settle(SPOTS[i][0] * 100 + "%", SPOTS[i][1] * 100 + "%");
+          return;
+        }
+      }
+      /* nowhere clear — the mark stays below the surface this breath;
+         the rings keep spreading from wherever the last drop fell */
+      mark.style.top = "150%";
+    }
+    placeMark();
+    /* re-choose its spot at the start of each 24s breath, while it is unseen */
+    var markTimer = setInterval(placeMark, 24000);
+    setTimeout(function () { clearInterval(markTimer); }, REST_AFTER);
+    placePondMark = placeMark;
+  }
+
   /* ---------- a hand on the water — movement wakes the page ---------- */
   var wakeTimer = null;
   function wake() {
@@ -177,6 +239,7 @@
     clearTimeout(wakeTimer);
     wakeTimer = setTimeout(function () {
       document.body.classList.remove("awake"); /* breathing resumes from the top */
+      if (placePondMark) placePondMark(); /* the water settled — find open water anew */
     }, 4000);
   }
   window.addEventListener("mousemove", wake);
